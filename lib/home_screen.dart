@@ -1,3 +1,5 @@
+import 'package:final_project/search_screen.dart';
+import 'package:final_project/sounds_screen.dart';
 import 'package:final_project/videos_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +25,36 @@ class _Home extends State<Home> {
                   children: <Widget>[
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        primary: Colors.blueAccent
+                      ),
+                    child: Text('Search', style: const TextStyle(fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.white),
+                        textAlign: TextAlign.center),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                        return SearchScreen();
+                      }));
+                    }
+                    ),
+
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent
+                        ),
+                        child: Text('Sounds', style: const TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white),
+                            textAlign: TextAlign.center),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                            return SoundsScreen();
+                          }));
+                        }
+                    ),
+
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
                           primary: Colors.blueAccent
                       ),
                       child: Text('Videos', style: const TextStyle(fontWeight: FontWeight.bold,
@@ -34,7 +66,7 @@ class _Home extends State<Home> {
                           return VideoResource();
                         }));
                       },
-                    )
+                    ),
                   ],
                 ),
               ),
