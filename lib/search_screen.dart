@@ -31,6 +31,11 @@ class _SearchScreen extends State<SearchScreen> {
 
   late List<Map<String, dynamic>> updatedList = [];
 
+  Map<String, dynamic> noBookFound =
+  {
+    'title': "No Book Found"
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +82,7 @@ class _SearchScreen extends State<SearchScreen> {
                       },
                       child: const Text('SEARCH')),
                   Expanded(
-                    child: isLoaded ? getListofBooks() : Text("** NO DATA **"),
+                    child: isLoaded ? getListofBooks() : Text(" "),
                   ),
                 ]
             )
@@ -103,7 +108,11 @@ class _SearchScreen extends State<SearchScreen> {
                 title:
                 Text(updatedList[index]["title"].toString()),
                 subtitle:
-                Text("Author: " + updatedList[index]["author"]),
+                bookExist ? Text("Author: " + updatedList[index]["author"] + " "
+                    + "Edition: " + updatedList[index]["edition"].toString() + " "
+                    + "Published: " + updatedList[index]["publish_data"].toString() + " "
+                    + "Rating: " + updatedList[index]["rating"].toString() + " "
+                    + "Price: " + updatedList[index]["price"]) : Text("** NO DATA **"),
               )
           );
         }
@@ -117,12 +126,9 @@ class _SearchScreen extends State<SearchScreen> {
     for (var i = 0; i < bookList.length; i++) {
       if (bookList[i]["isbn13"].toString() == item) {
         updatedList.add(bookList[i]);
-      }
-      else {
-        updatedList.add(noBookFound);
+        print("found book");
+        bookExist = true;
       }
     }
   }
-
-  String noBookFound = "blank";
 }
