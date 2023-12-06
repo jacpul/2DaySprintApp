@@ -14,6 +14,7 @@ class _SearchScreen extends State<SearchScreen> {
 
   TextEditingController searchText = TextEditingController();
   //late var bookCollection = FirebaseFirestore.instance.collection('Amazon Books');
+  bool isLoaded = false;
   List<String> tempList = [
     '1',
     '1',
@@ -27,6 +28,7 @@ class _SearchScreen extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow.shade300,
         appBar: AppBar(
             title: Text("Search"),
             centerTitle: true,
@@ -60,23 +62,14 @@ class _SearchScreen extends State<SearchScreen> {
                       onPressed: () {
                         updateList(searchText.text);
                         print("list is: ${updatedList.length}");
-                        /*
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Results'),
-                              // Retrieve the text the that user has entered by using the
-                              // TextEditingController.
-                              content: listOfBooks,
-                            );
-                          },
-                        );
-
-
-                         */
+                        setState(() {
+                            print(updatedList.length);
+                        });
                       },
                       child: const Text('SEARCH')),
+                  Expanded(
+                      child: isLoaded?listOfBooks:Text("** NO DATA **"),
+                  ),
                 ]
             )
         )
@@ -84,10 +77,10 @@ class _SearchScreen extends State<SearchScreen> {
   }
 
   late var listOfBooks = ListView.builder(
-    itemCount: tempList.length,
+    itemCount: updatedList.length,
     itemBuilder: (content, index) {
       return Card(
-        color: Colors.yellow.shade800,
+        color: Colors.yellow.shade600,
         child: ListTile(
           shape: RoundedRectangleBorder(
             side: const BorderSide(width: 2),
@@ -109,6 +102,8 @@ class _SearchScreen extends State<SearchScreen> {
 
   void updateList(String item) {
     print(item);
+    isLoaded = true;
+    updatedList.clear();
     for (var i = 0; i < tempList.length; i++) {
       if(tempList[i] == item) {
         print('true');

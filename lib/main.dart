@@ -6,8 +6,8 @@ import 'login_screen.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
