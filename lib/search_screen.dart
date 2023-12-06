@@ -37,6 +37,9 @@ class _SearchScreen extends State<SearchScreen> {
       tempList.add(element.data());
     });
     bookList = tempList;
+    setState(() {
+
+    });
   }
 
   bool bookExist = false;
