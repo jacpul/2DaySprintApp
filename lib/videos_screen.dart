@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'home_screen.dart';
+
 class VideoResource extends StatefulWidget {
   @override
   _VideoResource createState() => _VideoResource();
@@ -15,7 +17,18 @@ class _VideoResource extends State<VideoResource> {
       appBar: AppBar(
           title: Text("Video Resources"),
           centerTitle: true,
-          backgroundColor: Colors.deepOrangeAccent
+          backgroundColor: Colors.deepOrangeAccent,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout_outlined),
+              tooltip: 'Home',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                return Home();
+                }));
+              }
+            )
+          ]
       ),
 
       body: StreamBuilder(
@@ -81,7 +94,6 @@ class _VideoResource extends State<VideoResource> {
             );
           }
       ),
-      backgroundColor: Colors.yellow.shade800,
     );
   }
 }

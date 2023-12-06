@@ -1,3 +1,4 @@
+import 'package:final_project/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
@@ -85,7 +86,7 @@ class _Loginpage extends State<Loginpage>  {
         );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => Loginpage(),
+            builder: (context) => Home(),
           ),
         );
       } on FirebaseAuthException catch (e) {

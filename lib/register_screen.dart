@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'main_screen.dart';
+import 'home_screen.dart';
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -64,7 +65,7 @@ class _RegisterPage extends State<RegisterPage> {
 
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => Loginpage(),
+          builder: (context) => Home(),
         ),
       );
     } on FirebaseAuthException catch (e) {

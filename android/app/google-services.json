@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:900504350663:android:bf86c81b4c769d941a73e2",
         "android_client_info": {
-          "package_name": "codingomega.final"
+          "package_name": "com.example.codingomega.final"
         }
       },
       "oauth_client": [],
