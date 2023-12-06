@@ -13,17 +13,18 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreen extends State<SearchScreen> {
 
   TextEditingController searchText = TextEditingController();
-  //late var bookCollection = FirebaseFirestore.instance.collection('Amazon Books');
+  late var bookCollection = FirebaseFirestore.instance.collection('Amazon Books');
+  late List<Map<String, dynamic>> bookList;
   bool isLoaded = false;
-  List<String> tempList = [
-    '1',
-    '1',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-  ];
+  _functionCounter() async {
+    List<Map<String, dynamic>> tempList = [];
+    var logData = await bookCollection.get();
+    logData.docs.forEach((element) {
+      tempList.add(element.data());
+    });
+    bookList = tempList;
+  }
+
   List<String> updatedList = [];
   @override
   Widget build(BuildContext context) {
@@ -60,15 +61,18 @@ class _SearchScreen extends State<SearchScreen> {
                   ),
                   ElevatedButton(
                       onPressed: () {
+                        _functionCounter();
+                        isLoaded = false;
+                        print(bookList.length);
                         updateList(searchText.text);
                         print("list is: ${updatedList.length}");
                         setState(() {
-                            print(updatedList.length);
+
                         });
                       },
                       child: const Text('SEARCH')),
                   Expanded(
-                      child: isLoaded?listOfBooks:Text("** NO DATA **"),
+                      child: isLoaded?getListofBooks():Text("** NO DATA **"),
                   ),
                 ]
             )
@@ -76,38 +80,41 @@ class _SearchScreen extends State<SearchScreen> {
     );
   }
 
-  late var listOfBooks = ListView.builder(
-    itemCount: updatedList.length,
-    itemBuilder: (content, index) {
-      return Card(
-        color: Colors.yellow.shade600,
-        child: ListTile(
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 2),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          leading: const CircleAvatar(
-            backgroundColor: Colors.blueAccent,
-            child: Icon(Icons.library_books)
-          ),
-          title: Row(
-            children: [
-              Text(updatedList[index].toString()),
-            ],
-          )
-        )
-      );
-    }
-  );
+  getListofBooks() {
+    return ListView.builder(
+        itemCount: updatedList!.length,
+        itemBuilder: (content, index) {
+          return Card(
+              color: Colors.yellow.shade600,
+              child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  leading: const CircleAvatar(
+                      backgroundColor: Colors.blueAccent,
+                      child: Icon(Icons.library_books)
+                  ),
+                  title: Row(
+                    children: [
+                      Text(updatedList[index].toString()),
+                    ],
+                  )
+              )
+          );
+        }
+    );
+  }
 
   void updateList(String item) {
     print(item);
     isLoaded = true;
     updatedList.clear();
-    for (var i = 0; i < tempList.length; i++) {
-      if(tempList[i] == item) {
+    for (var i = 0; i < bookList.length; i++) {
+      if(bookList[i]["isbn13"].toString() == item) {
         print('true');
-        updatedList.add(tempList[i]);
+        print(bookList[i]);
+        updatedList.add(bookList[i]["author"].toString());
       }
     }
   }
