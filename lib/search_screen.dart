@@ -13,9 +13,11 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreen extends State<SearchScreen> {
 
   TextEditingController searchText = TextEditingController();
-  late var bookCollection = FirebaseFirestore.instance.collection('Amazon Books');
+  late var bookCollection = FirebaseFirestore.instance.collection(
+      'Amazon Books');
   late List<Map<String, dynamic>> bookList;
   bool isLoaded = false;
+
   _functionCounter() async {
     List<Map<String, dynamic>> tempList = [];
     var logData = await bookCollection.get();
@@ -25,11 +27,14 @@ class _SearchScreen extends State<SearchScreen> {
     bookList = tempList;
   }
 
-  List<String> updatedList = [];
+  bool bookExist = false;
+
+  late List<Map<String, dynamic>> updatedList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow.shade300,
+        backgroundColor: Colors.yellow.shade300,
         appBar: AppBar(
             title: Text("Search"),
             centerTitle: true,
@@ -72,7 +77,7 @@ class _SearchScreen extends State<SearchScreen> {
                       },
                       child: const Text('SEARCH')),
                   Expanded(
-                      child: isLoaded?getListofBooks():Text("** NO DATA **"),
+                    child: isLoaded ? getListofBooks() : Text("** NO DATA **"),
                   ),
                 ]
             )
@@ -87,19 +92,18 @@ class _SearchScreen extends State<SearchScreen> {
           return Card(
               color: Colors.yellow.shade600,
               child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 2),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  leading: const CircleAvatar(
-                      backgroundColor: Colors.blueAccent,
-                      child: Icon(Icons.library_books)
-                  ),
-                  title: Row(
-                    children: [
-                      Text(updatedList[index].toString()),
-                    ],
-                  )
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(width: 2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                leading: const CircleAvatar(
+                    backgroundColor: Colors.blueAccent,
+                    child: Icon(Icons.library_books)
+                ),
+                title:
+                Text(updatedList[index]["title"].toString()),
+                subtitle:
+                Text("Author: " + updatedList[index]["author"]),
               )
           );
         }
@@ -111,11 +115,14 @@ class _SearchScreen extends State<SearchScreen> {
     isLoaded = true;
     updatedList.clear();
     for (var i = 0; i < bookList.length; i++) {
-      if(bookList[i]["isbn13"].toString() == item) {
-        print('true');
-        print(bookList[i]);
-        updatedList.add(bookList[i]["author"].toString());
+      if (bookList[i]["isbn13"].toString() == item) {
+        updatedList.add(bookList[i]);
+      }
+      else {
+        updatedList.add(noBookFound);
       }
     }
   }
+
+  String noBookFound = "blank";
 }
