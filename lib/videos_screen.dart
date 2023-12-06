@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'home_screen.dart';
-import 'login_screen.dart';
 
 class VideoResource extends StatefulWidget {
   @override
@@ -95,7 +94,6 @@ class _VideoResource extends State<VideoResource> {
             );
           }
       ),
-      backgroundColor: Colors.yellow.shade800,
     );
   }
 }
