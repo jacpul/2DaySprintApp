@@ -20,7 +20,6 @@ class _VideoResource extends State<VideoResource> {
           centerTitle: true,
           backgroundColor: Colors.deepOrangeAccent,
           actions: [
-            /// Icon button to log out and bring user back to the login screen
             IconButton(
               icon: const Icon(Icons.logout_outlined),
               tooltip: 'Home',
