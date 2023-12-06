@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'home_screen.dart';
-import 'login_screen.dart';
+import 'login.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
