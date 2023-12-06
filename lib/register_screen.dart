@@ -110,10 +110,7 @@ class _RegisterPage extends State<RegisterPage> {
         alignment: Alignment.center,
         padding: const EdgeInsets.all(32),
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/sun.png'),
-            fit: BoxFit.cover,
-          ),
+
         ),
         child: Center(
           child: Column(

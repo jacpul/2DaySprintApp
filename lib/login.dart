@@ -126,10 +126,7 @@ class _Loginpage extends State<Loginpage>  {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/sun.png'),
-                    fit: BoxFit.cover,
-                  ),
+
                 ),
                 child: Column(
                     children: <Widget>[
