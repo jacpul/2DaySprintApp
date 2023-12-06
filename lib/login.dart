@@ -1,4 +1,4 @@
-import 'package:final_project/home_screen.dart';
+import 'home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
@@ -6,14 +6,7 @@ import 'main.dart';
 import 'register_screen.dart';
 
 
-/**
- * It brings you to the register Page
- *
- * Input: None
- *
- *Output: Takes you to the register screen
- *
- */
+
 
 Future goToSignUp(BuildContext context) async {
   Navigator.of(context).pushReplacement(
@@ -32,14 +25,7 @@ class Loginpage extends StatefulWidget {
 
 class _Loginpage extends State<Loginpage>  {
 
-  /**
-   * Creates a popup if your login information is invalid.
-   *
-   * Inputs: None
-   * Outputs: Creates a popup that tells you there is a error with
-   * the login information
-   *
-   */
+
   void showInvalidLoginDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -68,15 +54,7 @@ class _Loginpage extends State<Loginpage>  {
     final _passwordController = TextEditingController();
 
 
-    /**
-     * If you enter a valid username and password it will
-     * bring you to the home screen.
-     *
-     * Inputs: A Valid username and password
-     *
-     * Outputs: If it is valid it brings you to a home screen.
-     *
-     */
+
     Future signIn(BuildContext context) async {
       try {
         print('login button tapped');
@@ -94,15 +72,6 @@ class _Loginpage extends State<Loginpage>  {
         showInvalidLoginDialog(context);
       }
     }
-
-    /**
-     * Sends you an email to reset your password
-     *
-     * Inputs: an Email address in the email slot
-     *
-     * Outputs: an email to reset your password
-     *
-     */
 
     Future resetPassword(BuildContext context) async{
       await FirebaseAuth.instance.sendPasswordResetEmail(
@@ -176,7 +145,7 @@ class _Loginpage extends State<Loginpage>  {
                             child: Container(
                               padding: EdgeInsets.all(16.0),
                               color: Colors.blueAccent,
-                              child: Text(
+                              child: const Text(
                                 'Register',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -186,20 +155,13 @@ class _Loginpage extends State<Loginpage>  {
                             ),
                           ),
 
-                          /**
-                           * A click on this button sends you an email to reset your password.
-                           *
-                           * Input: A tap on the button that says Forgot Password
-                           *
-                           *Output: An email that sends you a link to reset your password
-                           *
-                           */
+
                           InkWell(
                             onTap: () => resetPassword(context),
                             child: Container(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               color: Colors.blueAccent,
-                              child: Text(
+                              child: const Text(
                                 'Forgot Password',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -208,22 +170,12 @@ class _Loginpage extends State<Loginpage>  {
                               ),
                             ),
                           ),
-                          /**
-                           * Tries and logs you into the app, with the account that
-                           * you already have in firebase
-                           *
-                           * Input: A tap on the login button
-                           *
-                           * Output: If successfully logs in brings you to the home page
-                           * if not a popup tells you what went wrong
-                           *
-                           */
                           InkWell(
                             onTap: () => signIn(context),
                             child: Container(
                               padding: EdgeInsets.all(16.0),
                               color: Colors.blueAccent,
-                              child: Text(
+                              child: const Text(
                                 'Login',
                                 style: TextStyle(
                                   color: Colors.white,
