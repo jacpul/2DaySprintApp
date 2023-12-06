@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'home_screen.dart';
-import 'login_screen.dart';
+import 'login.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -11,10 +11,22 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreen extends State<SearchScreen> {
+  // Disposes text editing controllers used for the search
+  @override
+  void dispose() {
+    _searchBarController.dispose();
+
+    super.dispose();
+  }
+
+  // Used to determine how we are searching
+  String _searchMethod = "Title";
+  String _searchBarText = "";
+
+  final _searchBarController = TextEditingController();
 
   TextEditingController searchText = TextEditingController();
-  late var bookCollection = FirebaseFirestore.instance.collection(
-      'Amazon Books');
+  late var bookCollection = FirebaseFirestore.instance.collection('Amazon Books');
   late List<Map<String, dynamic>> bookList;
   bool isLoaded = false;
 
@@ -30,11 +42,6 @@ class _SearchScreen extends State<SearchScreen> {
   bool bookExist = false;
 
   late List<Map<String, dynamic>> updatedList = [];
-
-  Map<String, dynamic> noBookFound =
-  {
-    'title': "No Book Found"
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -59,34 +66,87 @@ class _SearchScreen extends State<SearchScreen> {
               )
             ]
         ),
-        body: Center(
-            child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.search),
-                      hintText: 'Enter search term...',
-                    ),
-                    controller: searchText,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        _functionCounter();
-                        isLoaded = false;
-                        print(bookList.length);
-                        updateList(searchText.text);
-                        print("list is: ${updatedList.length}");
-                        setState(() {
-
-                        });
-                      },
-                      child: const Text('SEARCH')),
-                  Expanded(
-                    child: isLoaded ? getListofBooks() : Text(" "),
-                  ),
-                ]
-            )
-        )
+      body: Container(
+        color: Colors.yellow.shade400,
+        margin: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Radio<String>(
+                  activeColor: Colors.blue,
+                  value: "Title",
+                  groupValue: _searchMethod,
+                  onChanged: (value) {
+                    setState(() {
+                        _searchMethod = value!;
+                    });
+                  }),
+                const Text(
+                  'Title',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                Radio<String>(
+                    activeColor: Colors.blue,
+                    value: "Author",
+                    groupValue: _searchMethod,
+                    onChanged: (value) {
+                      setState(() {
+                        _searchMethod = value!;
+                      });
+                    }),
+                const Text(
+                  'Author',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                Radio<String>(
+                    activeColor: Colors.blue,
+                    value: "ISBN",
+                    groupValue: _searchMethod,
+                    onChanged: (value) {
+                      setState(() {
+                        _searchMethod = value!;
+                      });
+                    }),
+                const Text(
+                  'ISBN Number',
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ],
+            ),
+            TextFormField(
+              controller: _searchBarController,
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.next,
+              onChanged: (value) {
+                setState(() {
+                  _searchBarText = value;
+                });
+              },
+              decoration: InputDecoration(
+                hintText: 'Enter Details Here',
+                labelText: _searchMethod,
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _functionCounter();
+                isLoaded = false;
+                print(bookList.length);
+                updateList(_searchBarController.text);
+                print("list is: ${updatedList.length}");
+                setState(() {});
+              },
+              child: const Text('SEARCH')),
+            Expanded(
+              child: isLoaded ? getListofBooks() : Text(" "),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
