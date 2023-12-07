@@ -2,6 +2,8 @@ import 'package:final_project/search_screen.dart';
 import 'package:final_project/sounds_screen.dart';
 import 'package:final_project/videos_screen.dart';
 import 'package:flutter/material.dart';
+import 'login.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,16 +11,49 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
+
+  String url = "https://www.kaggle.com/uzair01";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Builder(
         builder: (context) =>
             Scaffold (
-              backgroundColor: Colors.yellow.shade400,
+                backgroundColor: Colors.yellow.shade400,
+             bottomNavigationBar: const BottomAppBar(
+               color: Colors.deepOrange,
+             ),
+
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text('Sources for Data'),
+                icon:const Icon(Icons.source_outlined),
+                tooltip: "View Sources",
+                onPressed: () async{
+                  if (await canLaunch(url)) {
+                  await launch(
+                    url,
+                    forceWebView: true,
+                    enableJavaScript: true,
+                  );
+                }}
+              ),
+              floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
               appBar: AppBar(
                 title: Text("Home"),
                 backgroundColor: Colors.deepOrange,
+                actions: [
+                  IconButton(
+                      icon: const Icon(Icons.logout_outlined),
+                      tooltip: 'Logout',
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                          return Loginpage();
+                        }));
+                      }
+                  )
+                ],
               ),
               body: Container(
                 alignment: Alignment.center,

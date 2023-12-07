@@ -192,11 +192,29 @@ class _SearchScreen extends State<SearchScreen> {
   }
 
   void updateList(String item) {
+    // Used to get the database field
+    String firebaseField = item;
+
     print(item);
     isLoaded = true;
     updatedList.clear();
+
+    switch (_searchMethod) {
+      case 'Title':
+        firebaseField = "title";
+        break;
+      case 'Author':
+        firebaseField = "author";
+        break;
+      case 'ISBN':
+        firebaseField = 'isbn13';
+        break;
+      default:
+        break;
+    }
+
     for (var i = 0; i < bookList.length; i++) {
-      if (bookList[i]["isbn13"].toString() == item) {
+      if (bookList[i][firebaseField].toString() == item) {
         updatedList.add(bookList[i]);
         print("found book");
         print(bookList[i]["publish_date"]);
