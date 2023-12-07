@@ -31,8 +31,7 @@ class _CompareScreenState extends State<CompareScreen> {
 
   _functionCounter() async {
     List<Map<String, dynamic>> tempList = [];
-    var logData = await FirebaseFirestore.instance.collection('Amazon Books')
-        .get();
+    var logData = await FirebaseFirestore.instance.collection('Amazon Books').get();
     logData.docs.forEach((element) {
       tempList.add(element.data());
     });
@@ -135,7 +134,7 @@ class _CompareScreenState extends State<CompareScreen> {
                 updateList(_searchBarController.text);
                 setState(() {});
               },
-              child: const Text('Add To Compare'),
+              child: const Text('Add to Compare'),
             ),
             isLoaded
                 ? compareList.length == 2
@@ -184,45 +183,43 @@ class _CompareScreenState extends State<CompareScreen> {
     );
   }
 
-  void updateList(String item) {
-// Used to get the database field
-    String firebaseField = item;
+  String timeStampToString(Timestamp t) {
+    DateTime date = t.toDate();
+    String month = date.month.toString();
+    String day = date.day.toString();
+    String year = date.year.toString();
+    String full_date = month + '/' + day + '/' + year;
+    return full_date;
+  }
 
-    print(item);
+  void updateList(String item) {
     isLoaded = true;
     updatedList.clear();
-
-    switch (_searchMethod) {
-      case 'Title':
-        firebaseField = "title";
-        break;
-      case 'Author':
-        firebaseField = "author";
-        break;
-      case 'ISBN':
-        firebaseField = 'isbn13';
-        break;
-      default:
-        break;
+    for (var i = 0; i < bookList.length; i++) {
+      if (_searchMethod == "Title" &&
+          bookList[i]["title"].toString().toLowerCase().contains(item.toLowerCase())) {
+        updatedList.add(bookList[i]);
+        bookExist = true;
+      } else if (_searchMethod == "Author" &&
+          bookList[i]["author"].toString().toLowerCase().contains(item.toLowerCase())) {
+        updatedList.add(bookList[i]);
+        bookExist = true;
+      } else if (_searchMethod == "ISBN" &&
+          bookList[i]["isbn13"].toString().toLowerCase() == item.toLowerCase()) {
+        updatedList.add(bookList[i]);
+        bookExist = true;
+      }
     }
 
-    for (var i = 0; i < bookList.length; i++) {
-      if (bookList[i][firebaseField].toString() == item) {
-        if (bookList[i]["isbn13"].toString() == item) {
-          updatedList.add(bookList[i]);
-          bookExist = true;
-        }
-      }
+    if (compareList.length == 2) {
+      compareList.clear();
+    }
 
-      if (compareList.length == 2) {
-        compareList.clear();
-      }
-
-      if (updatedList.isNotEmpty) {
-        compareList.add(updatedList[0]);
-      }
+    if (updatedList.isNotEmpty) {
+      compareList.add(updatedList[0]);
     }
   }
+
 
   getListofBooks() {
     return ListView.builder(
@@ -244,8 +241,7 @@ class _CompareScreenState extends State<CompareScreen> {
                   "Edition: " +
                   updatedList[index]["edition"].toString() +
                   "\n" +
-                  "Published: " +
-                  updatedList[index]["publish_data"].toString() +
+                  "Published: " + timeStampToString(updatedList[index]["publish_date"]) +
                   "\n" +
                   "Rating: " +
                   updatedList[index]["rating"].toString() +
@@ -260,5 +256,3 @@ class _CompareScreenState extends State<CompareScreen> {
     );
   }
 }
-
-
