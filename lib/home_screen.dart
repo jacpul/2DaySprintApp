@@ -20,15 +20,16 @@ class _Home extends State<Home> {
         builder: (context) =>
             Scaffold (
 
-             bottomNavigationBar: BottomAppBar(
-               child: Text("Source for data set"),
+             bottomNavigationBar: const BottomAppBar(
                color: Colors.deepOrange,
              ),
 
-              floatingActionButton: FloatingActionButton(
-                child: Icon(Icons.source_outlined),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text('Sources for Data'),
+                icon:const Icon(Icons.source_outlined),
                 tooltip: "View Sources",
-                onPressed: () async{ if (await canLaunch(url)) {
+                onPressed: () async{
+                  if (await canLaunch(url)) {
                   await launch(
                     url,
                     forceWebView: true,
