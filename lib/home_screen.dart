@@ -2,6 +2,7 @@ import 'package:final_project/search_screen.dart';
 import 'package:final_project/sounds_screen.dart';
 import 'package:final_project/videos_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -65,6 +66,27 @@ class _Home extends State<Home> {
                         Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                           return VideoResource();
                         }));
+                      },
+                    ),
+
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.blueAccent
+                      ),
+                      child: Text('Resources', style: const TextStyle(fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white),
+                          textAlign: TextAlign.center),
+                      onPressed: () async {
+                        const url = "https://www.kaggle.com/uzair01";
+
+                        if (await canLaunch(url)) {
+                        await launch(
+                        url,
+                        forceWebView: true,
+                        enableJavaScript: true,
+                        );
+                        }
                       },
                     ),
                   ],
