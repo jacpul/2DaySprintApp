@@ -38,7 +38,7 @@ class _Home extends State<Home> {
                   );
                 }}
               ),
-              floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
               appBar: AppBar(
                 title: Text("Home"),
