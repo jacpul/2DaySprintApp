@@ -10,12 +10,34 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
+
+  String url = "https://www.kaggle.com/uzair01";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Builder(
         builder: (context) =>
             Scaffold (
+
+             bottomNavigationBar: BottomAppBar(
+               child: Text("Source for data set"),
+               color: Colors.deepOrange,
+             ),
+
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.source_outlined),
+                tooltip: "View Sources",
+                onPressed: () async{ if (await canLaunch(url)) {
+                  await launch(
+                    url,
+                    forceWebView: true,
+                    enableJavaScript: true,
+                  );
+                }}
+              ),
+              floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
               appBar: AppBar(
                 title: Text("Home"),
                 backgroundColor: Colors.deepOrange,
@@ -66,27 +88,6 @@ class _Home extends State<Home> {
                         Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                           return VideoResource();
                         }));
-                      },
-                    ),
-
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.blueAccent
-                      ),
-                      child: Text('Resources', style: const TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.white),
-                          textAlign: TextAlign.center),
-                      onPressed: () async {
-                        const url = "https://www.kaggle.com/uzair01";
-
-                        if (await canLaunch(url)) {
-                        await launch(
-                        url,
-                        forceWebView: true,
-                        enableJavaScript: true,
-                        );
-                        }
                       },
                     ),
                   ],
