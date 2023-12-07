@@ -2,6 +2,7 @@ import 'package:final_project/search_screen.dart';
 import 'package:final_project/sounds_screen.dart';
 import 'package:final_project/videos_screen.dart';
 import 'package:flutter/material.dart';
+import 'login.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,6 +19,17 @@ class _Home extends State<Home> {
               appBar: AppBar(
                 title: Text("Home"),
                 backgroundColor: Colors.deepOrange,
+                actions: [
+                  IconButton(
+                      icon: const Icon(Icons.logout_outlined),
+                      tooltip: 'Logout',
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                          return Loginpage();
+                        }));
+                      }
+                  )
+                ],
               ),
               body: Container(
                 alignment: Alignment.center,
