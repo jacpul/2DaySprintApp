@@ -20,7 +20,7 @@ class _Home extends State<Home> {
       home: Builder(
         builder: (context) =>
             Scaffold (
-
+                backgroundColor: Colors.yellow.shade400,
              bottomNavigationBar: const BottomAppBar(
                color: Colors.deepOrange,
              ),
@@ -38,7 +38,7 @@ class _Home extends State<Home> {
                   );
                 }}
               ),
-              floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
               appBar: AppBar(
                 title: Text("Home"),
@@ -59,49 +59,83 @@ class _Home extends State<Home> {
                 alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blueAccent
-                      ),
-                    child: Text('Search', style: const TextStyle(fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.white),
-                        textAlign: TextAlign.center),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child:SizedBox(
+                        height: 100,
+                        width: 200,
+                        child:
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30)
+                                ),
+                            ),
+                            child: Text('Search', style: const TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                           color: Colors.white),
+                           textAlign: TextAlign.center),
+                       onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                         return SearchScreen();
-                      }));
-                    }
+                        }));
+                        }
+                      ),
+                    ),
                     ),
 
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.blueAccent
+
+                    Padding(
+                        padding: EdgeInsets.all(20),
+                        child:SizedBox(
+                          height: 100,
+                          width: 200,
+                          child:
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.blueAccent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)
+                                )
+                            ),
+
+                            child: Text('Sounds', style: const TextStyle(fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.white),
+                                textAlign: TextAlign.center),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                return SoundsScreen();
+                              }));
+                            }
                         ),
-                        child: Text('Sounds', style: const TextStyle(fontWeight: FontWeight.bold,
+                    )
+                    ),
+
+
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: SizedBox(
+                        height: 100,
+                        width: 200,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                        ),
+                        child: Text('Videos', style: const TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 18,
                             color: Colors.white),
                             textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                            return SoundsScreen();
+                            return VideoResource();
                           }));
-                        }
-                    ),
-
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.blueAccent
+                        },
                       ),
-                      child: Text('Videos', style: const TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.white),
-                          textAlign: TextAlign.center),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                          return VideoResource();
-                        }));
-                      },
+                    ),
                     ),
                   ],
                 ),

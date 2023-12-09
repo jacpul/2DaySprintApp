@@ -47,6 +47,47 @@ class _Loginpage extends State<Loginpage>  {
   }
 
 
+  void showInvalidForgotPass(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Invalid Email'),
+          content: Text('You have entered an incorrect email. Please try again.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showValidForgotPass(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Valid Email'),
+          content: Text('You have entered a correct email. Please check your email.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +115,13 @@ class _Loginpage extends State<Loginpage>  {
     }
 
     Future resetPassword(BuildContext context) async{
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-          email: _emailController.text.trim());
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(
+            email: _emailController.text.trim());
+            showValidForgotPass(context);
+      } on FirebaseAuthException catch (e){
+        showInvalidForgotPass(context);
+      }
     }
 
     @override
@@ -132,14 +178,7 @@ class _Loginpage extends State<Loginpage>  {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          /**
-                           * A click on this button takes you to the register page
-                           *
-                           * Input: A tap on the button that says register
-                           *
-                           *Output: The screen changing to the register screen
-                           *
-                           */
+
                           InkWell(
                             onTap: () => goToSignUp(context),
                             child: Container(

@@ -155,7 +155,7 @@ class _SearchScreen extends State<SearchScreen> {
 
   getListofBooks() {
     return ListView.builder(
-        itemCount: updatedList!.length,
+        itemCount: updatedList.length,
         itemBuilder: (content, index) {
           return Card(
               color: Colors.yellow.shade600,
@@ -173,13 +173,22 @@ class _SearchScreen extends State<SearchScreen> {
                 subtitle:
                 bookExist ? Text("Author: " + updatedList[index]["author"] + " "
                     + "Edition: " + updatedList[index]["edition"].toString() + " "
-                    + "Published: " + updatedList[index]["publish_data"].toString() + " "
+                    + "Published: " + timeStampToString(updatedList[index]["publish_date"]) + " "
                     + "Rating: " + updatedList[index]["rating"].toString() + " "
                     + "Price: " + updatedList[index]["price"]) : Text("** NO DATA **"),
               )
           );
         }
     );
+  }
+
+  String timeStampToString(Timestamp t) {
+    DateTime date = t.toDate();
+    String month = date.month.toString();
+    String day = date.day.toString();
+    String year = date.year.toString();
+    String full_date = month + '/' + day + '/' + year;
+    return full_date;
   }
 
   void updateList(String item) {
@@ -208,6 +217,7 @@ class _SearchScreen extends State<SearchScreen> {
       if (bookList[i][firebaseField].toString() == item) {
         updatedList.add(bookList[i]);
         print("found book");
+        print(bookList[i]["publish_date"]);
         bookExist = true;
       }
     }
