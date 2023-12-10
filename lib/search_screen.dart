@@ -214,7 +214,7 @@ class _SearchScreen extends State<SearchScreen> {
     }
 
     for (var i = 0; i < bookList.length; i++) {
-      if (bookList[i][firebaseField].toString().length >= item.length && bookList[i][firebaseField].toString().substring(0, item.length) == item && bookList[i][firebaseField] != null) {
+      if (bookList[i][firebaseField].toString().toLowerCase().contains(item.toLowerCase())) {
         updatedList.add(bookList[i]);
         print("found book");
         print(bookList[i]["publish_date"]);
