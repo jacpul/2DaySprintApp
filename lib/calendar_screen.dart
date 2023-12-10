@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:final_project/calendar_add.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'calendar_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,7 +39,7 @@ class _CalendarScreen extends State<CalendarScreen> {
    * async initialize function for firestore communication and parsing
    */
   void getUserData() async {
-    dataUser = FirebaseAuth.instance.dataUser!.uid; // gets the current user
+    dataUser = FirebaseAuth.instance.currentUser!.uid; // gets the current user
     userData = FirebaseFirestore.instance.collection('users').doc(dataUser).collection('Logs'); // gets an instance of the logs documents from the current user
     var data = await userData.get(); // puts log docs into the data
     debugPrint("dataUser: $dataUser, log: ${userData.id}, event: ${_eventStorage?.length}");
@@ -104,6 +105,38 @@ class _CalendarScreen extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+            tooltip: "Create Event",
+            shape: RoundedRectangleBorder(),
+            backgroundColor: Colors.redAccent,
+            onPressed: () async{
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CalendarAdd(),
+                  ));
+              },
+            child: Icon(Icons.add_rounded),
+        ),
+        appBar: AppBar(
+            title: Text("Your Calendar"),
+            centerTitle: true,
+            backgroundColor: Colors.deepOrangeAccent,
+            actions: [
+
+              /// Icon button to log out and bring user back to the login screen
+              IconButton(
+                  icon: const Icon(Icons.logout_outlined),
+                  tooltip: 'Home',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return Home();
+                        }));
+                  }
+              )
+            ]
+        ),
         backgroundColor: Colors.amber,
 
         body: Column(
@@ -239,6 +272,8 @@ class _CalendarScreen extends State<CalendarScreen> {
               ),
             ]
         )
+
     );
+
   }
 }

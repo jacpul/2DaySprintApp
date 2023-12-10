@@ -1,3 +1,4 @@
+import 'package:final_project/calendar_screen.dart';
 import 'package:final_project/search_screen.dart';
 import 'package:final_project/sounds_screen.dart';
 import 'package:final_project/videos_screen.dart';
@@ -136,6 +137,32 @@ class _Home extends State<Home> {
                         },
                       ),
                     ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.all(20),
+                        child:SizedBox(
+                          height: 100,
+                          width: 200,
+                          child:
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.blueAccent,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)
+                                  )
+                              ),
+
+                              child: Text('Calendar', style: const TextStyle(fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white),
+                                  textAlign: TextAlign.center),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                  return CalendarScreen();
+                                }));
+                              }
+                          ),
+                        )
                     ),
                   ],
                 ),
