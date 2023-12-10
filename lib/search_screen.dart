@@ -205,7 +205,7 @@ class _SearchScreen extends State<SearchScreen> {
     }
 
     for (var i = 0; i < bookList.length; i++) {
-      if (bookList[i][firebaseField].toString() == item) {
+      if (bookList[i][firebaseField].toString().length >= item.length && bookList[i][firebaseField].toString().substring(0, item.length) == item && bookList[i][firebaseField] != null) {
         updatedList.add(bookList[i]);
         print("found book");
         bookExist = true;
