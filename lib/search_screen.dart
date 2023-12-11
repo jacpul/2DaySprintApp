@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_project/videos_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'compare_screen.dart';
 import 'home_screen.dart';
-import 'login.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -21,16 +18,25 @@ class _SearchScreen extends State<SearchScreen> {
     super.dispose();
   }
 
+  // used to initialize the book list
+  @override
+  void initState() {
+    _functionCounter();
+    super.initState();
+  }
+
   // Used to determine how we are searching
   String _searchMethod = "Title";
   String _searchBarText = "";
+  bool isLoaded = false;
+  bool bookExist = false;
 
   final _searchBarController = TextEditingController();
 
-  TextEditingController searchText = TextEditingController();
-  late var bookCollection = FirebaseFirestore.instance.collection('Amazon Books');
-  late List<Map<String, dynamic>> bookList;
-  bool isLoaded = false;
+  late var bookCollection =
+      FirebaseFirestore.instance.collection('Amazon Books');
+  late List<Map<String, dynamic>> bookList = [];
+  late List<Map<String, dynamic>> updatedList = [];
 
   _functionCounter() async {
     List<Map<String, dynamic>> tempList = [];
@@ -39,67 +45,57 @@ class _SearchScreen extends State<SearchScreen> {
       tempList.add(element.data());
     });
     bookList = tempList;
-    setState(() {
-
-    });
+    setState(() {});
   }
-
-  bool bookExist = false;
-
-  late List<Map<String, dynamic>> updatedList = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.yellow.shade300,
-        appBar: AppBar(
-            title: Text("Search"),
-            centerTitle: true,
-            backgroundColor: Colors.deepOrangeAccent,
-            actions: [
+      backgroundColor: Colors.yellow.shade300,
+      appBar: AppBar(
+          title: const Text("Search"),
+          centerTitle: true,
+          backgroundColor: Colors.deepOrangeAccent,
+          actions: [
+            /// Icon button to log out and bring user back to the login screen
+            IconButton(
+                icon: const Icon(Icons.home),
+                tooltip: 'Home',
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return Home();
+                  }));
+                }),
 
-              /// Icon button to log out and bring user back to the login screen
-              IconButton(
-                  icon: const Icon(Icons.home),
-                  tooltip: 'Home',
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return Home();
-                        }));
-                  }
-              ),
-              /// Icon button to log out and bring user back to the search screen
-              IconButton(
-                  icon: const Icon(Icons.search_outlined),
-                  tooltip: 'Search',
-                  onPressed: () {
-                  }
-              ),
-              /// Icon button to log out and bring user back to the compare screen
-              IconButton(
-                  icon: const Icon(Icons.compare),
-                  tooltip: 'Compare',
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return CompareScreen();
-                        }));
-                  }
-              ),
-              /// Icon button to log out and bring user back to the video screen
-              IconButton(
-                  icon: const Icon(Icons.play_arrow_outlined),
-                  tooltip: 'Videos',
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return VideoResource();
-                        }));
-                  }
-              )
-            ]
-        ),
+            /// Icon button to log out and bring user back to the search screen
+            IconButton(
+                icon: const Icon(Icons.search_outlined),
+                tooltip: 'Search',
+                onPressed: () {}),
+
+            /// Icon button to log out and bring user back to the compare screen
+            IconButton(
+                icon: const Icon(Icons.compare),
+                tooltip: 'Compare',
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return CompareScreen();
+                  }));
+                }),
+
+            /// Icon button to log out and bring user back to the video screen
+            IconButton(
+                icon: const Icon(Icons.play_arrow_outlined),
+                tooltip: 'Videos',
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return VideoResource();
+                  }));
+                })
+          ]),
       body: Container(
         color: Colors.yellow.shade400,
         margin: const EdgeInsets.all(8.0),
@@ -111,14 +107,14 @@ class _SearchScreen extends State<SearchScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Radio<String>(
-                  activeColor: Colors.blue,
-                  value: "Title",
-                  groupValue: _searchMethod,
-                  onChanged: (value) {
-                    setState(() {
+                    activeColor: Colors.blue,
+                    value: "Title",
+                    groupValue: _searchMethod,
+                    onChanged: (value) {
+                      setState(() {
                         _searchMethod = value!;
-                    });
-                  }),
+                      });
+                    }),
                 const Text(
                   'Title',
                   style: TextStyle(color: Colors.blue),
@@ -166,17 +162,17 @@ class _SearchScreen extends State<SearchScreen> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                _functionCounter();
-                isLoaded = false;
-                print(bookList.length);
-                updateList(_searchBarController.text);
-                print("list is: ${updatedList.length}");
-                setState(() {});
-              },
-              child: const Text('SEARCH')),
+                onPressed: () {
+                  _functionCounter();
+                  isLoaded = false;
+                  //print(bookList.length);
+                  updateList(_searchBarText);
+                  //print("list is: ${updatedList.length}");
+                  setState(() {});
+                },
+                child: const Text('SEARCH')),
             Expanded(
-              child: isLoaded ? getListofBooks() : Text(" "),
+              child: isLoaded ? getListOfBooks() : const Text(" "),
             ),
           ],
         ),
@@ -184,17 +180,17 @@ class _SearchScreen extends State<SearchScreen> {
     );
   }
 
-  getListofBooks() {
+  getListOfBooks() {
     return ListView.builder(
         itemCount: updatedList.length,
         itemBuilder: (content, index) {
           String publishedDate = "";
 
-          if(updatedList[index]["publish_date"] == null) {
+          if (updatedList[index]["publish_date"] == null) {
             publishedDate = "No Publish Date Found.";
-          }
-          else {
-            publishedDate = timeStampToString(updatedList[index]["publish_date"]);
+          } else {
+            publishedDate =
+                timeStampToString(updatedList[index]["publish_date"]);
           }
           return Card(
               color: Colors.yellow.shade600,
@@ -205,20 +201,22 @@ class _SearchScreen extends State<SearchScreen> {
                 ),
                 leading: const CircleAvatar(
                     backgroundColor: Colors.blueAccent,
-                    child: Icon(Icons.library_books)
-                ),
-                title:
-                Text(updatedList[index]["title"].toString()),
-                subtitle:
-                bookExist ? Text("Author: " + updatedList[index]["author"].toString() + " "
-                    + "Edition: " + updatedList[index]["edition"].toString() + " "
-                    + "Published: " + publishedDate + " "
-                    + "Rating: " + updatedList[index]["rating"].toString() + " "
-                    + "Price: " + updatedList[index]["price"]) : Text("** NO DATA **"),
-              )
-          );
-        }
-    );
+                    child: Icon(Icons.library_books)),
+                title: Text(updatedList[index]["title"].toString()),
+                subtitle: bookExist
+                    ? Text("Author: " +
+                        updatedList[index]["author"].toString() + " " +
+                        "Edition: " +
+                        updatedList[index]["edition"].toString() + " " +
+                        "Published: " +
+                        publishedDate + " " +
+                        "Rating: " +
+                        updatedList[index]["rating"].toString() + " " +
+                        "Price: " +
+                        updatedList[index]["price"])
+                    : const Text("** NO DATA **"),
+              ));
+        });
   }
 
   String timeStampToString(Timestamp t) {
@@ -226,15 +224,15 @@ class _SearchScreen extends State<SearchScreen> {
     String month = date.month.toString();
     String day = date.day.toString();
     String year = date.year.toString();
-    String full_date = month + '/' + day + '/' + year;
-    return full_date;
+    String fullDate = '$month/$day/$year';
+    return fullDate;
   }
 
   void updateList(String item) {
     // Used to get the database field
     String firebaseField = item;
 
-    print(item);
+    //print(item);
     isLoaded = true;
     updatedList.clear();
 
@@ -255,8 +253,8 @@ class _SearchScreen extends State<SearchScreen> {
     for (var i = 0; i < bookList.length; i++) {
       if (bookList[i][firebaseField].toString().toLowerCase().contains(item.toLowerCase())) {
         updatedList.add(bookList[i]);
-        print("found book");
-        print(bookList[i]["publish_date"]);
+        //print("found book");
+        //print(bookList[i]["publish_date"]);
         bookExist = true;
       }
     }
