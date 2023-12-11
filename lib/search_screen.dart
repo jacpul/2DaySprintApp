@@ -157,6 +157,14 @@ class _SearchScreen extends State<SearchScreen> {
     return ListView.builder(
         itemCount: updatedList.length,
         itemBuilder: (content, index) {
+          String publishedDate = "";
+
+          if(updatedList[index]["publish_date"] == null) {
+            publishedDate = "No Publish Date Found.";
+          }
+          else {
+            publishedDate = timeStampToString(updatedList[index]["publish_date"]);
+          }
           return Card(
               color: Colors.yellow.shade600,
               child: ListTile(
@@ -171,9 +179,9 @@ class _SearchScreen extends State<SearchScreen> {
                 title:
                 Text(updatedList[index]["title"].toString()),
                 subtitle:
-                bookExist ? Text("Author: " + updatedList[index]["author"] + " "
+                bookExist ? Text("Author: " + updatedList[index]["author"].toString() + " "
                     + "Edition: " + updatedList[index]["edition"].toString() + " "
-                    + "Published: " + timeStampToString(updatedList[index]["publish_date"]) + " "
+                    + "Published: " + publishedDate + " "
                     + "Rating: " + updatedList[index]["rating"].toString() + " "
                     + "Price: " + updatedList[index]["price"]) : Text("** NO DATA **"),
               )
