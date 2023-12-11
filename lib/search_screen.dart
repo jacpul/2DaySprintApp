@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_project/videos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'compare_screen.dart';
 import 'home_screen.dart';
 import 'login.dart';
 
@@ -58,12 +60,41 @@ class _SearchScreen extends State<SearchScreen> {
 
               /// Icon button to log out and bring user back to the login screen
               IconButton(
-                  icon: const Icon(Icons.logout_outlined),
+                  icon: const Icon(Icons.home),
                   tooltip: 'Home',
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
                           return Home();
+                        }));
+                  }
+              ),
+              /// Icon button to log out and bring user back to the search screen
+              IconButton(
+                  icon: const Icon(Icons.search_outlined),
+                  tooltip: 'Search',
+                  onPressed: () {
+                  }
+              ),
+              /// Icon button to log out and bring user back to the compare screen
+              IconButton(
+                  icon: const Icon(Icons.compare),
+                  tooltip: 'Compare',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return CompareScreen();
+                        }));
+                  }
+              ),
+              /// Icon button to log out and bring user back to the video screen
+              IconButton(
+                  icon: const Icon(Icons.play_arrow_outlined),
+                  tooltip: 'Videos',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return VideoResource();
                         }));
                   }
               )

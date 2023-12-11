@@ -134,6 +134,7 @@ class _Loginpage extends State<Loginpage>  {
       home: Builder(
         builder: (context) =>
             Scaffold (
+              backgroundColor: Colors.yellow.shade400,
               appBar: AppBar(
                 title: Text("Login"),
                 backgroundColor: Colors.deepOrange,
