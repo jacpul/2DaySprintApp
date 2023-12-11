@@ -1,6 +1,6 @@
 import 'package:final_project/calendar_screen.dart';
 import 'package:final_project/search_screen.dart';
-import 'package:final_project/sounds_screen.dart';
+import 'package:final_project/compare_screen.dart';
 import 'package:final_project/videos_screen.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
@@ -101,20 +101,18 @@ class _Home extends State<Home> {
                                 )
                             ),
 
-                            child: Text('Sounds', style: const TextStyle(fontWeight: FontWeight.bold,
+                            child: Text('Compare', style: const TextStyle(fontWeight: FontWeight.bold,
                                 fontSize: 18,
                                 color: Colors.white),
                                 textAlign: TextAlign.center),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                                return SoundsScreen();
+                                return CompareScreen();
                               }));
                             }
                         ),
                     )
                     ),
-
-
                     Padding(
                       padding: EdgeInsets.all(20),
                       child: SizedBox(
