@@ -149,14 +149,16 @@ class _CalendarAdd extends State<CalendarAdd> {
               padding: EdgeInsets.only(top: 16.0),
               child: Text("When do you need this book by?",style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF3A391D)), textScaleFactor: 1.5,)
               ,),
+            Flexible(child:
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0, right: 5.0),
                     child: const Icon(Icons.access_time_rounded, color: Color(0xFFB1782B)),
                   ),
+
                   Expanded(child: Padding(
                     padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                     child: TextFormField(
@@ -229,6 +231,7 @@ class _CalendarAdd extends State<CalendarAdd> {
                 ],
               ),
             ),
+            ),
             const Padding(
               padding: EdgeInsets.all(10.0),
               child: Text("Will this book need to be returned?",style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF3A391D)), textScaleFactor: 1.5,)
@@ -295,6 +298,8 @@ class _CalendarAdd extends State<CalendarAdd> {
               padding: EdgeInsets.all(10.0),
               child: Text("Now enter the ISBN13 number:",style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF3A391D)), textScaleFactor: 1.5,)
               ,),
+            Flexible(
+              child:
             Padding(
               padding: const EdgeInsets.only(right: 30.0, left: 30.0),
               child: TextFormField(
@@ -314,6 +319,8 @@ class _CalendarAdd extends State<CalendarAdd> {
                 ),
               ),
             ),
+            ),
+            Flexible(child:
             Padding(
               padding: const EdgeInsets.only(right: 30.0, left: 30.0),
               child: TextFormField(
@@ -332,6 +339,7 @@ class _CalendarAdd extends State<CalendarAdd> {
                   icon: Icon(Icons.book_outlined),
                 ),
               ),
+            ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
