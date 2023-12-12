@@ -61,16 +61,21 @@ class _Home extends State<Home> {
               body: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
+                /*
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/library.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
+
+                 */
                 child: Column(
                   children: <Widget>[
+                    Expanded(
+                        child:
                     Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.only(bottom: 60),
                       child:SizedBox(
                         height: 100,
                         width: 200,
@@ -94,10 +99,12 @@ class _Home extends State<Home> {
                       ),
                     ),
                     ),
+                    ),
 
-
+                    Expanded(
+                        child:
                     Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: EdgeInsets.only(bottom: 60),
                         child:SizedBox(
                           height: 100,
                           width: 200,
@@ -122,8 +129,12 @@ class _Home extends State<Home> {
                         ),
                     )
                     ),
+                    ),
+
+                    Expanded(
+                      child:
                     Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.only(bottom: 60),
                       child: SizedBox(
                         height: 100,
                         width: 200,
@@ -145,8 +156,12 @@ class _Home extends State<Home> {
                       ),
                     ),
                     ),
+                    ),
+
+                    Expanded(
+                      child:
                     Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: EdgeInsets.only(bottom: 60),
                         child:SizedBox(
                           height: 100,
                           width: 200,
@@ -170,6 +185,7 @@ class _Home extends State<Home> {
                               }
                           ),
                         )
+                    ),
                     ),
                   ],
                 ),
