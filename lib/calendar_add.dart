@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_project/calendar_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -350,6 +351,7 @@ class _CalendarAdd extends State<CalendarAdd> {
               ),
               onPressed: () {
                 createCalendarEvent();
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarScreen()));
               },
 
               child: Text('Submit Event'),

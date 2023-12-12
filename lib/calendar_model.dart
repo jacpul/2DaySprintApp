@@ -16,11 +16,12 @@ class Event {
   final String needReturn;
   final String notes;
   final String price;
+  final String id;
 
-  Event(this.title, this.day, this.month, this.year, this.isbn13, this.needReturn, this.notes, this.price);
+  Event(this.title, this.day, this.month, this.year, this.isbn13, this.needReturn, this.notes, this.price, this.id);
 
   @override
-  String toString() => title;
+  String toString() => id;
 }
 
 /**
@@ -48,10 +49,10 @@ Future<LinkedHashMap<DateTime, List<Event>>> populateLogList(var logData) async 
     String needReturn = element['return'];
     String notes = element['notes'];
     String price = element['price'];
-    print(element.id);
+    String id = element.id;
     DateTime eventDay = DateTime(year, month, day);
     tempLinkedMap.putIfAbsent(eventDay, () => []);
-    tempLinkedMap[eventDay]?.add(Event(title, day.toString(), month.toString(), year.toString(), isbn13, needReturn, notes, price));
+    tempLinkedMap[eventDay]?.add(Event(title, day.toString(), month.toString(), year.toString(), isbn13, needReturn, notes, price, id));
     debugPrint('title: $title Length of Map: ${tempLinkedMap.length}');
   });
   return LinkedHashMap<DateTime, List<Event>>(
