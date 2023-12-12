@@ -134,10 +134,11 @@ class _Loginpage extends State<Loginpage>  {
       home: Builder(
         builder: (context) =>
             Scaffold (
-              backgroundColor: Colors.yellow.shade400,
+              backgroundColor: Color(0xFFD3C9B6),
               appBar: AppBar(
-                title: Text("Login"),
-                backgroundColor: Colors.deepOrange,
+                title: Text("Login",
+                style: TextStyle(color: Color(0xFFD3C9B6)),),
+                backgroundColor: Color(0xFF7D491A),
               ),
               body: Container(
                 alignment: Alignment.center,
@@ -152,7 +153,7 @@ class _Loginpage extends State<Loginpage>  {
                         child: Text(
                           "Login",
                           style: const TextStyle(fontWeight: FontWeight.bold,
-                              color: Colors.blueAccent),
+                              color: Color(0xFF3A391D)),
                           textScaleFactor: 3,
                         ),
                       ),
@@ -184,11 +185,11 @@ class _Loginpage extends State<Loginpage>  {
                             onTap: () => goToSignUp(context),
                             child: Container(
                               padding: EdgeInsets.all(16.0),
-                              color: Colors.blueAccent,
+                              color: Color(0xFFB1782B),
                               child: const Text(
                                 'Register',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFFD3C9B6),
                                   fontSize: 16.0,
                                 ),
                               ),
@@ -200,11 +201,11 @@ class _Loginpage extends State<Loginpage>  {
                             onTap: () => resetPassword(context),
                             child: Container(
                               padding: const EdgeInsets.all(16.0),
-                              color: Colors.blueAccent,
+                              color: Color(0xFF826145),
                               child: const Text(
                                 'Forgot Password',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFFD3C9B6),
                                   fontSize: 16.0,
                                 ),
                               ),
@@ -214,11 +215,11 @@ class _Loginpage extends State<Loginpage>  {
                             onTap: () => signIn(context),
                             child: Container(
                               padding: EdgeInsets.all(16.0),
-                              color: Colors.blueAccent,
+                              color: Color(0xFFC39F67),
                               child: const Text(
                                 'Login',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFFD3C9B6),
                                   fontSize: 16.0,
                                 ),
                               ),

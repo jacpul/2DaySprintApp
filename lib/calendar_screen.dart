@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:final_project/calendar_add.dart';
+import 'package:final_project/videos_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'calendar_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import 'compare_screen.dart';
 import 'home_screen.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -40,10 +42,10 @@ class _CalendarScreen extends State<CalendarScreen> {
    */
   void getUserData() async {
     dataUser = FirebaseAuth.instance.currentUser!.uid; // gets the current user
-    userData = FirebaseFirestore.instance.collection('users').doc(dataUser).collection('Logs'); // gets an instance of the logs documents from the current user
-    var data = await userData.get(); // puts log docs into the data
+    userData = FirebaseFirestore.instance.collection('users').doc(dataUser).collection('Events'); // gets an instance of the logs documents from the current user
+    var usersData = await userData.get(); // puts log docs into the data
     debugPrint("dataUser: $dataUser, log: ${userData.id}, event: ${_eventStorage?.length}");
-    _eventStorage = await populateLogList(data); // calls populateLogList from calendar_model and waits for it to return
+    _eventStorage = await populateLogList(usersData); // calls populateLogList from calendar_model and waits for it to return
     //sets state once everything is finished, to update the app
     setState(() {
       _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
@@ -108,7 +110,7 @@ class _CalendarScreen extends State<CalendarScreen> {
         floatingActionButton: FloatingActionButton(
             tooltip: "Create Event",
             shape: RoundedRectangleBorder(),
-            backgroundColor: Colors.redAccent,
+            backgroundColor: Color(0xFF3A391D),
             onPressed: () async{
               Navigator.push(
                   context,
@@ -119,66 +121,98 @@ class _CalendarScreen extends State<CalendarScreen> {
             child: Icon(Icons.add_rounded),
         ),
         appBar: AppBar(
-            title: Text("Your Calendar"),
+            title: Text(" ", style: TextStyle(color: Color(0xFFD3C9B6)),),
             centerTitle: true,
-            backgroundColor: Colors.deepOrangeAccent,
+            backgroundColor: Color(0xFF3A391D),
             actions: [
 
               /// Icon button to log out and bring user back to the login screen
               IconButton(
-                  icon: const Icon(Icons.logout_outlined),
+                  icon: const Icon(Icons.home, color: Color(0xFFD3C9B6)),
                   tooltip: 'Home',
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return Home();
-                        }));
-                  }
-              )
-            ]
-        ),
-        backgroundColor: Colors.amber,
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (BuildContext context) {
+                      return Home();
+                    }));
+                  }),
+
+              /// Icon button to log out and bring user back to the search screen
+              IconButton(
+                  icon: const Icon(Icons.search_outlined, color: Color(0xFFD3C9B6)),
+                  tooltip: 'Search',
+                  onPressed: () {}),
+
+              /// Icon button to log out and bring user back to the compare screen
+              IconButton(
+                  icon: const Icon(Icons.compare, color: Color(0xFFD3C9B6)),
+                  tooltip: 'Compare',
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (BuildContext context) {
+                      return CompareScreen();
+                    }));
+                  }),
+
+              /// Icon button to log out and bring user back to the video screen
+              IconButton(
+                  icon: const Icon(Icons.play_arrow_outlined, color: Color(0xFFD3C9B6),),
+                  tooltip: 'Videos',
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (BuildContext context) {
+                      return VideoResource();
+                    }));
+                  }),
+
+              IconButton(
+                  icon: const Icon(Icons.calendar_month, color: Color(0xFFD3C9B6),),
+                  tooltip: 'Calendar',
+                  onPressed: () {
+                  })
+            ]),
+        backgroundColor: Color(0xFFD3C9B6),
 
         body: Column(
             children: [
               _initialized ? TableCalendar<Event>(
                 headerStyle: const HeaderStyle(
                   titleTextStyle:
-                  TextStyle(color: Colors.white, fontSize: 20.0),
+                  TextStyle(color: Color(0xFFD3C9B6), fontSize: 20.0),
                   decoration: BoxDecoration(
-                      color: Colors.deepOrange,
+                      color: Color(0xFF7D491A),
                       borderRadius: BorderRadius.only()),
                   formatButtonTextStyle:
-                  TextStyle(color: Colors.deepOrangeAccent, fontSize: 16.0),
+                  TextStyle(color: Color(0xFF3A391D), fontSize: 16.0),
                   formatButtonDecoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFFD3C9B6),
                   ),
                   leftChevronIcon: Icon(
                     Icons.chevron_left,
-                    color: Colors.white,
+                    color: Color(0xFFD3C9B6),
                     size: 28,
                   ),
                   rightChevronIcon: Icon(
                     Icons.chevron_right,
-                    color: Colors.white,
+                    color: Color(0xFFD3C9B6),
                     size: 28,
                   ),
                 ),
                 daysOfWeekStyle: const DaysOfWeekStyle(
-                    weekdayStyle: TextStyle(color: Colors.white),
-                    weekendStyle: TextStyle(color: Colors.blueAccent)
+                    weekdayStyle: TextStyle(color: Color(0xFF3A391D)),
+                    weekendStyle: TextStyle(color: Color(0xFF7D491A))
                 ),
                 calendarStyle: const CalendarStyle(
-                  weekendTextStyle: TextStyle(color: Colors.blue),
-                  weekNumberTextStyle: TextStyle(color: Colors.black),
-                  outsideTextStyle: TextStyle(color: Colors.white),
+                  weekendTextStyle: TextStyle(color: Color(0xFF7D491A)),
+                  weekNumberTextStyle: TextStyle(color: Color(0xFF3A391D)),
+                  outsideTextStyle: TextStyle(color: Color(0xFFB1782B)),
                   todayDecoration: BoxDecoration(
-                    color: Colors.blueAccent,
+                    color: Color(0xFFC39F67),
                     shape: BoxShape.circle,
                   ),
                   // highlighted color for selected day
                   selectedDecoration: BoxDecoration(
-                    color: Colors.amberAccent,
+                    color: Color(0xFF826145),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -220,37 +254,37 @@ class _CalendarScreen extends State<CalendarScreen> {
                         itemBuilder: (context, index) {
                           return Card(
                               child: ListTile(
-                                tileColor: Colors.deepOrangeAccent,
+                                tileColor: Color(0xFF3A391D),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  side: BorderSide(
-                                    color: Colors.white, // Set the color of the border here
+                                  borderRadius: BorderRadius.circular(5),
+                                  side: const BorderSide(
+                                    color: Color(0xFF7D491A), // Set the color of the border here
                                     width: 3.5,
                                   ),
                                 ),
                                 leading: const CircleAvatar(
-                                  backgroundColor: Colors.blueAccent,
-                                  child: Icon(Icons.icecream,
-                                      color: Colors.white),
+                                  backgroundColor: Color(0xFFB1782B),
+                                  child: Icon(Icons.edit_calendar,
+                                      color: Color(0xFFD3C9B6)),
                                 ),
                                 title: Row(
                                   children: [
-                                    Text('${value[index].month}-${value[index].day}-${value[index].year}  Hours Slept: ${value[index].hours}',
-                                        style: TextStyle(color: Colors.white)
+                                    Text('${value[index].needReturn} : ${value[index].month}-${value[index].day}-${value[index].year}',
+                                        style: TextStyle(color: Color(0xFFD3C9B6))
                                     )
                                   ],
                                 ),
                                 subtitle:
-                                Text('Sleep Quality: ${value[index].quality}  Notes: ${value[index].notes}',
-                                    style: TextStyle(color: Colors.white)
+                                Text('${value[index].title} \nPrice: ${value[index].price}    Notes: ${value[index].notes}',
+                                    style: TextStyle(color: Color(0xFFD3C9B6))
                                 ),
                                 trailing:
                                 Icon(Icons.delete,
-                                    color: Colors.white),
+                                    color: Color(0xFFD3C9B6)),
                                 onTap: () {
                                   showDialog(context: context, builder: (context) =>
                                       AlertDialog(
-                                        title: Text("Would You Like Delete This Log?"),
+                                        title: Text("Would You Like Delete This Event?"),
                                         actions: [
                                           TextButton(
                                               onPressed: () => Navigator.pop(context),

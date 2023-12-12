@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_project/calendar_screen.dart';
 import 'package:final_project/videos_screen.dart';
 import 'package:flutter/material.dart';
 import 'compare_screen.dart';
@@ -51,15 +52,15 @@ class _SearchScreen extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow.shade300,
+      backgroundColor: const Color(0xFF826145),
       appBar: AppBar(
-          title: const Text("Search"),
+          title: const Text(" "),
           centerTitle: true,
-          backgroundColor: Colors.deepOrangeAccent,
+          backgroundColor: const Color(0xFF3A391D),
           actions: [
             /// Icon button to log out and bring user back to the login screen
             IconButton(
-                icon: const Icon(Icons.home),
+                icon: const Icon(Icons.home, color: Color(0xFFD3C9B6)),
                 tooltip: 'Home',
                 onPressed: () {
                   Navigator.of(context)
@@ -70,13 +71,13 @@ class _SearchScreen extends State<SearchScreen> {
 
             /// Icon button to log out and bring user back to the search screen
             IconButton(
-                icon: const Icon(Icons.search_outlined),
+                icon: const Icon(Icons.search_outlined, color: Color(0xFFD3C9B6)),
                 tooltip: 'Search',
                 onPressed: () {}),
 
             /// Icon button to log out and bring user back to the compare screen
             IconButton(
-                icon: const Icon(Icons.compare),
+                icon: const Icon(Icons.compare, color: Color(0xFFD3C9B6)),
                 tooltip: 'Compare',
                 onPressed: () {
                   Navigator.of(context)
@@ -87,94 +88,112 @@ class _SearchScreen extends State<SearchScreen> {
 
             /// Icon button to log out and bring user back to the video screen
             IconButton(
-                icon: const Icon(Icons.play_arrow_outlined),
+                icon: const Icon(Icons.play_arrow_outlined, color: Color(0xFFD3C9B6),),
                 tooltip: 'Videos',
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (BuildContext context) {
                     return VideoResource();
                   }));
+                }),
+
+            IconButton(
+                icon: const Icon(Icons.calendar_month, color: Color(0xFFD3C9B6),),
+                tooltip: 'Calendar',
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return CalendarScreen();
+                  }));
                 })
           ]),
-      body: Container(
-        color: Colors.yellow.shade400,
-        margin: const EdgeInsets.all(8.0),
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: const Color(0xFFD3C9B6),
+          ),
+          margin: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Radio<String>(
-                    activeColor: Colors.blue,
-                    value: "Title",
-                    groupValue: _searchMethod,
-                    onChanged: (value) {
-                      setState(() {
-                        _searchMethod = value!;
-                      });
-                    }),
-                const Text(
-                  'Title',
-                  style: TextStyle(color: Colors.blue),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2.0, right: 5.0),
+                      child: Text(
+                        'Search Method:',
+                        style: TextStyle(fontSize: 18, color: Color(0xFF3A391D)),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30.0),
+                      child: DropdownButton<String>(
+                        value: _searchMethod,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _searchMethod = value!;
+                          });
+                        },
+                        items: <String>['Title', 'Author', 'ISBN'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Color(0xFF826145)),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
                 ),
-                Radio<String>(
-                    activeColor: Colors.blue,
-                    value: "Author",
-                    groupValue: _searchMethod,
-                    onChanged: (value) {
-                      setState(() {
-                        _searchMethod = value!;
-                      });
-                    }),
-                const Text(
-                  'Author',
-                  style: TextStyle(color: Colors.blue),
+                TextFormField(
+                  controller: _searchBarController,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  onChanged: (value) {
+                    setState(() {
+                      _searchBarText = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Enter Details Here',
+                    labelText: _searchMethod,
+                  ),
                 ),
-                Radio<String>(
-                    activeColor: Colors.blue,
-                    value: "ISBN",
-                    groupValue: _searchMethod,
-                    onChanged: (value) {
-                      setState(() {
-                        _searchMethod = value!;
-                      });
-                    }),
-                const Text(
-                  'ISBN Number',
-                  style: TextStyle(color: Colors.blue),
+                ElevatedButton(
+                  onPressed: () {
+                    _functionCounter();
+                    isLoaded = false;
+                    updateList(_searchBarText);
+                    setState(() {});
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF826145),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.search, color: Color(0xFFD3C9B6)), // Add your desired icon
+                      SizedBox(width: 8.0), // Adjust the spacing between icon and text
+                      Text('Search', style: TextStyle(color: Color(0xFFD3C9B6))),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: isLoaded ? getListOfBooks() : const Text(" "),
                 ),
               ],
             ),
-            TextFormField(
-              controller: _searchBarController,
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
-              onChanged: (value) {
-                setState(() {
-                  _searchBarText = value;
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'Enter Details Here',
-                labelText: _searchMethod,
-              ),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  _functionCounter();
-                  isLoaded = false;
-                  //print(bookList.length);
-                  updateList(_searchBarText);
-                  //print("list is: ${updatedList.length}");
-                  setState(() {});
-                },
-                child: const Text('SEARCH')),
-            Expanded(
-              child: isLoaded ? getListOfBooks() : const Text(" "),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -193,16 +212,16 @@ class _SearchScreen extends State<SearchScreen> {
                 timeStampToString(updatedList[index]["publish_date"]);
           }
           return Card(
-              color: Colors.yellow.shade600,
+              color: Color(0xFF3A391D),
               child: ListTile(
                 shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 2),
-                  borderRadius: BorderRadius.circular(20),
+                  side: const BorderSide(width: 5, color: Color(0xFFB1782B)),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 leading: const CircleAvatar(
-                    backgroundColor: Colors.blueAccent,
-                    child: Icon(Icons.library_books)),
-                title: Text(updatedList[index]["title"].toString()),
+                    backgroundColor: Color(0xFFC39F67),
+                    child: Icon(Icons.library_books, color: Color(0xFFD3C9B6),)),
+                title: Text(updatedList[index]["title"].toString(), style: TextStyle(color: Color(0xFFD3C9B6)),),
                 subtitle: bookExist
                     ? Text("Author: " +
                         updatedList[index]["author"].toString() + " " +
@@ -213,7 +232,7 @@ class _SearchScreen extends State<SearchScreen> {
                         "Rating: " +
                         updatedList[index]["rating"].toString() + " " +
                         "Price: " +
-                        updatedList[index]["price"])
+                        updatedList[index]["price"], style: TextStyle(color: Color(0xFFD3C9B6)),)
                     : const Text("** NO DATA **"),
               ));
         });

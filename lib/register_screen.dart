@@ -105,13 +105,14 @@ class _RegisterPage extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: Text('Register', style: TextStyle(color: Color(0xFFD3C9B6)),),
+        backgroundColor: Color(0xFF3A391D),
       ),
       body: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.all(32),
         decoration: const BoxDecoration(
-
+          color: Color(0xFFD3C9B6)
         ),
         child: Center(
           child: Column(
@@ -121,7 +122,7 @@ class _RegisterPage extends State<RegisterPage> {
                 child: Text(
                   "Register",
                   style: const TextStyle(fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent),
+                      color: Color(0xFFB1782B)),
                   textScaleFactor: 3,
                 ),
               ),
@@ -164,11 +165,11 @@ class _RegisterPage extends State<RegisterPage> {
                     },
                     child: Container(
                       padding: EdgeInsets.all(16.0),
-                      color: Colors.blue,
+                      color: Color(0xFF7D491A),
                       child: Text(
                         'Return to Login',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFFD3C9B6),
                           fontSize: 16.0,
                         ),
                       ),
@@ -186,11 +187,11 @@ class _RegisterPage extends State<RegisterPage> {
                     onTap: () => signUp(),
                     child: Container(
                       padding: EdgeInsets.all(16.0),
-                      color: Colors.blue,
+                      color: Color(0xFF826145),
                       child: Text(
                         'Register',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFFD3C9B6),
                           fontSize: 16.0,
                         ),
                       ),

@@ -21,12 +21,13 @@ class _Home extends State<Home> {
       home: Builder(
         builder: (context) =>
             Scaffold (
-                backgroundColor: Colors.yellow.shade400,
+                backgroundColor: const Color(0xFFD3C9B6),
              bottomNavigationBar: const BottomAppBar(
-               color: Colors.deepOrange,
+               color: Color(0xFF3A391D),
              ),
 
               floatingActionButton: FloatingActionButton.extended(
+                backgroundColor: Color(0xFF826145),
                 label: const Text('Sources for Data'),
                 icon:const Icon(Icons.source_outlined),
                 tooltip: "View Sources",
@@ -42,8 +43,9 @@ class _Home extends State<Home> {
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
               appBar: AppBar(
-                title: Text("Home"),
-                backgroundColor: Colors.deepOrange,
+                title: const Text("Your CS Library",
+                style: TextStyle(color: Color(0xFFD3C9B6)),),
+                backgroundColor: Color(0xFF3A391D),
                 actions: [
                   IconButton(
                       icon: const Icon(Icons.logout_outlined),
@@ -58,6 +60,13 @@ class _Home extends State<Home> {
               ),
               body: Container(
                 alignment: Alignment.center,
+                padding: const EdgeInsets.all(32),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/library.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 child: Column(
                   children: <Widget>[
                     Padding(
@@ -68,14 +77,14 @@ class _Home extends State<Home> {
                         child:
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                            primary: Colors.blueAccent,
+                            primary: Color(0xFFC39F67),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)
                                 ),
                             ),
-                            child: Text('Search', style: const TextStyle(fontWeight: FontWeight.bold,
+                            child: const Text('Search', style: TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 18,
-                           color: Colors.white),
+                           color: Color(0xFFD3C9B6)),
                            textAlign: TextAlign.center),
                        onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -95,7 +104,7 @@ class _Home extends State<Home> {
                           child:
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.blueAccent,
+                                primary: Color(0xFFB1782B),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)
                                 )
@@ -103,7 +112,7 @@ class _Home extends State<Home> {
 
                             child: Text('Compare', style: const TextStyle(fontWeight: FontWeight.bold,
                                 fontSize: 18,
-                                color: Colors.white),
+                                color: Color(0xFFD3C9B6)),
                                 textAlign: TextAlign.center),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -120,13 +129,13 @@ class _Home extends State<Home> {
                         width: 200,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.blueAccent,
+                            primary: Color(0xFF7D491A),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30)),
                         ),
                         child: Text('Videos', style: const TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.white),
+                            color: Color(0xFFD3C9B6)),
                             textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -144,7 +153,7 @@ class _Home extends State<Home> {
                           child:
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary: Colors.blueAccent,
+                                  primary: Color(0xFF3A391D),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30)
                                   )
@@ -152,7 +161,7 @@ class _Home extends State<Home> {
 
                               child: Text('Calendar', style: const TextStyle(fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  color: Colors.white),
+                                  color: Color(0xFFD3C9B6)),
                                   textAlign: TextAlign.center),
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {

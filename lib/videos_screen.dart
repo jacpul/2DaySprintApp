@@ -3,6 +3,7 @@ import 'package:final_project/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'calendar_screen.dart';
 import 'compare_screen.dart';
 import 'home_screen.dart';
 
@@ -16,15 +17,15 @@ class _VideoResource extends State<VideoResource> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow.shade400,
+      backgroundColor: Color(0xFFB1782B),
       appBar: AppBar(
-          title: Text("Video Resources"),
+          title: Text("Video Resources", style: TextStyle(color: Color(0xFFD3C9B6)),),
           centerTitle: true,
-          backgroundColor: Colors.deepOrangeAccent,
+          backgroundColor: Color(0xFF7D491A),
           actions: [
             /// Icon button to log out and bring user back to the login screen
             IconButton(
-                icon: const Icon(Icons.home),
+                icon: const Icon(Icons.home, color: Color(0xFFD3C9B6)),
                 tooltip: 'Home',
                 onPressed: () {
                   Navigator.of(context).push(
@@ -35,7 +36,7 @@ class _VideoResource extends State<VideoResource> {
             ),
             /// Icon button to log out and bring user back to the search screen
             IconButton(
-                icon: const Icon(Icons.search_outlined),
+                icon: const Icon(Icons.search_outlined, color: Color(0xFFD3C9B6)),
                 tooltip: 'Search',
                 onPressed: () {
                   Navigator.of(context).push(
@@ -46,7 +47,7 @@ class _VideoResource extends State<VideoResource> {
             ),
             /// Icon button to log out and bring user back to the compare screen
             IconButton(
-                icon: const Icon(Icons.compare),
+                icon: const Icon(Icons.compare, color: Color(0xFFD3C9B6)),
                 tooltip: 'Compare',
                 onPressed: () {
                   Navigator.of(context).push(
@@ -57,12 +58,21 @@ class _VideoResource extends State<VideoResource> {
             ),
             /// Icon button to log out and bring user back to the video screen
             IconButton(
-                icon: const Icon(Icons.play_arrow_outlined),
+                icon: const Icon(Icons.play_arrow_outlined, color: Color(0xFFD3C9B6)),
                 tooltip: 'Videos',
                 onPressed: () {
 
                 }
-            )
+            ),
+            IconButton(
+                icon: const Icon(Icons.calendar_month, color: Color(0xFFD3C9B6),),
+                tooltip: 'Calendar',
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return CalendarScreen();
+                  }));
+                })
           ]
       ),
 
@@ -88,6 +98,7 @@ class _VideoResource extends State<VideoResource> {
                             ),
                             Text(document["title"], style: const TextStyle(fontWeight: FontWeight.bold,
                               fontSize: 22,
+                              color: Color(0xFF3A391D)
                             )),
                             //Text("URL: "+ document["url"]),
                             /**
@@ -99,11 +110,11 @@ class _VideoResource extends State<VideoResource> {
                              */
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors.blueAccent
+                                    primary: Color(0xFFD3C9B6)
                                 ),
                                 child: Text('Open Link',  style: const TextStyle(fontWeight: FontWeight.normal,
                                     fontSize: 18,
-                                    color: Colors.white),
+                                    color: Color(0xFF3A391D)),
                                     textAlign: TextAlign.center),
                                 onPressed: () async {
                                   final url = document["url"];
@@ -118,8 +129,8 @@ class _VideoResource extends State<VideoResource> {
                                 }
                             ),
                             Divider(
-                              color: Colors.blueAccent,
-                              thickness: 3,
+                              color: Color(0xFFD3C9B6),
+                              thickness: 5,
                             )
                           ]
                       )

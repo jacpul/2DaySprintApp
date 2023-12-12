@@ -12,11 +12,12 @@ class Event {
   final String day;
   final String month;
   final String year;
-  final String hours;
-  final String quality;
+  final String isbn13;
+  final String needReturn;
   final String notes;
+  final String price;
 
-  Event(this.title, this.day, this.month, this.year, this.hours, this.quality, this.notes);
+  Event(this.title, this.day, this.month, this.year, this.isbn13, this.needReturn, this.notes, this.price);
 
   @override
   String toString() => title;
@@ -39,29 +40,18 @@ int getHashCode(DateTime key) {
 Future<LinkedHashMap<DateTime, List<Event>>> populateLogList(var logData) async {
   var tempLinkedMap = <DateTime, List<Event>> {};
   logData.docs.forEach((element) {
-    int day = -1;
-    int month = -1;
-    int year = -1;
-    String strDay = "Day Not Found";
-    day = element['Day'];
-    strDay = day.toString();
-    String strMonth = "Month Not Found";
-    month = element['Month'];
-    strMonth = month.toString();
-    String strYear = "Year Not Found";
-    year = element['Year'];
-    strYear = year.toString();
-    String hours = "Hours Slept Not Found";
-    hours = element['Hours_Slept'];
-    String quality = "Quality Not Found";
-    quality = element['Sleep_Quality'];
-    String notes = "Notes Not Found";
-    notes = element['Notes'];
+    String title = element['title'];
+    int day = element['day'];
+    int month = element['month'];
+    int year = element['year'];
+    String isbn13 = element['isbn13'];
+    String needReturn = element['return'];
+    String notes = element['notes'];
+    String price = element['price'];
     print(element.id);
-    String title =  element.id;
     DateTime eventDay = DateTime(year, month, day);
     tempLinkedMap.putIfAbsent(eventDay, () => []);
-    tempLinkedMap[eventDay]?.add(Event(title, strDay, strMonth, strYear, hours, quality, notes));
+    tempLinkedMap[eventDay]?.add(Event(title, day.toString(), month.toString(), year.toString(), isbn13, needReturn, notes, price));
     debugPrint('title: $title Length of Map: ${tempLinkedMap.length}');
   });
   return LinkedHashMap<DateTime, List<Event>>(
