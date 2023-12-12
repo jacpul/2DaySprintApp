@@ -13,7 +13,7 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
 
-  String url = "https://www.kaggle.com/uzair01";
+  final Uri url  = Uri.parse("https://www.kaggle.com/uzair01");
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +21,26 @@ class _Home extends State<Home> {
       home: Builder(
         builder: (context) =>
             Scaffold (
-                backgroundColor: const Color(0xFFD3C9B6),
-             bottomNavigationBar: const BottomAppBar(
-               color: Color(0xFF3A391D),
-             ),
+              backgroundColor: const Color(0xFFD3C9B6),
+              bottomNavigationBar: const BottomAppBar(
+                color: Color(0xFF3A391D),
+              ),
 
               floatingActionButton: FloatingActionButton.extended(
-                backgroundColor: Color(0xFF826145),
-                label: const Text('Sources for Data'),
-                icon:const Icon(Icons.source_outlined),
-                tooltip: "View Sources",
-                onPressed: () async{
-                  if (await canLaunch(url)) {
-                  await launch(
-                    url,
-                    forceWebView: true,
-                    enableJavaScript: true,
-                  );
-                }}
+                  backgroundColor: Color(0xFF826145),
+                  label: const Text('Sources for Data'),
+                  icon:const Icon(Icons.source_outlined),
+                  tooltip: "View Sources",
+                  onPressed: () async{
+                    if (await launchUrl(url)) {
+                      throw Exception('could not launch');
+                    }}
               ),
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
               appBar: AppBar(
                 title: const Text("Your CS Library",
-                style: TextStyle(color: Color(0xFFD3C9B6)),),
+                  style: TextStyle(color: Color(0xFFD3C9B6)),),
                 backgroundColor: Color(0xFF3A391D),
                 actions: [
                   IconButton(
@@ -61,7 +57,7 @@ class _Home extends State<Home> {
               body: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
-                /*
+
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/library.png'),
@@ -69,123 +65,122 @@ class _Home extends State<Home> {
                   ),
                 ),
 
-                 */
                 child: Column(
                   children: <Widget>[
                     Expanded(
-                        child:
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 60),
-                      child:SizedBox(
-                        height: 100,
-                        width: 200,
-                        child:
+                      child:
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 60),
+                        child:SizedBox(
+                          height: 100,
+                          width: 200,
+                          child:
                           ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                            primary: Color(0xFFC39F67),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFFC39F67),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)
                                 ),
-                            ),
-                            child: const Text('Search', style: TextStyle(fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                           color: Color(0xFFD3C9B6)),
-                           textAlign: TextAlign.center),
-                       onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                        return SearchScreen();
-                        }));
-                        }
-                      ),
-                    ),
-                    ),
-                    ),
-
-                    Expanded(
-                        child:
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 60),
-                        child:SizedBox(
-                          height: 100,
-                          width: 200,
-                          child:
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFB1782B),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)
-                                )
-                            ),
-
-                            child: Text('Compare', style: const TextStyle(fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Color(0xFFD3C9B6)),
-                                textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                                return CompareScreen();
-                              }));
-                            }
-                        ),
-                    )
-                    ),
-                    ),
-
-                    Expanded(
-                      child:
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 60),
-                      child: SizedBox(
-                        height: 100,
-                        width: 200,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF7D491A),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                        ),
-                        child: Text('Videos', style: const TextStyle(fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Color(0xFFD3C9B6)),
-                            textAlign: TextAlign.center),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                            return VideoResource();
-                          }));
-                        },
-                      ),
-                    ),
-                    ),
-                    ),
-
-                    Expanded(
-                      child:
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 60),
-                        child:SizedBox(
-                          height: 100,
-                          width: 200,
-                          child:
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Color(0xFF3A391D),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)
-                                  )
                               ),
-
-                              child: Text('Calendar', style: const TextStyle(fontWeight: FontWeight.bold,
+                              child: const Text('Search', style: TextStyle(fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                   color: Color(0xFFD3C9B6)),
                                   textAlign: TextAlign.center),
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                                  return CalendarScreen();
+                                  return SearchScreen();
                                 }));
                               }
                           ),
-                        )
+                        ),
+                      ),
                     ),
+
+                    Expanded(
+                      child:
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 60),
+                          child:SizedBox(
+                            height: 100,
+                            width: 200,
+                            child:
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFFB1782B),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30)
+                                    )
+                                ),
+
+                                child: Text('Compare', style: const TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color(0xFFD3C9B6)),
+                                    textAlign: TextAlign.center),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                    return CompareScreen();
+                                  }));
+                                }
+                            ),
+                          )
+                      ),
+                    ),
+
+                    Expanded(
+                      child:
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 60),
+                        child: SizedBox(
+                          height: 100,
+                          width: 200,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Color(0xFF7D491A),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                            ),
+                            child: Text('Videos', style: const TextStyle(fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Color(0xFFD3C9B6)),
+                                textAlign: TextAlign.center),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                return VideoResource();
+                              }));
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Expanded(
+                      child:
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 60),
+                          child:SizedBox(
+                            height: 100,
+                            width: 200,
+                            child:
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFF3A391D),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30)
+                                    )
+                                ),
+
+                                child: Text('Calendar', style: const TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color(0xFFD3C9B6)),
+                                    textAlign: TextAlign.center),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                    return CalendarScreen();
+                                  }));
+                                }
+                            ),
+                          )
+                      ),
                     ),
                   ],
                 ),
