@@ -217,7 +217,7 @@ class _CompareScreenState extends State<CompareScreen> {
           children: [
             Text("Author: ${book["author"]}", style: TextStyle(color: Color(0xFFD3C9B6)),),
             Text("Edition: ${book["edition"]}", style: TextStyle(color: Color(0xFFD3C9B6)),),
-            Text("Published: ${book["publish_data"]}", style: TextStyle(color: Color(0xFFD3C9B6)),),
+            Text("Published: ${timeStampToString(book["publish_date"])}", style: TextStyle(color: Color(0xFFD3C9B6)),),
             Text("Rating: ${book["rating"]}", style: TextStyle(color: Color(0xFFD3C9B6)),),
             Text("Price: ${book["price"]}", style: TextStyle(color: Color(0xFFD3C9B6)),),
           ],
